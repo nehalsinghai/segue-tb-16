@@ -1,0 +1,246 @@
+SQL Notes Day 4
+===============
+
+Working with Tables using Nested Sub-Queries 
+
+UC: Display all courses that belong to 'IT' department. 
+
+Tip: In Nested queries, we work with single table at a time. 
+
+select cname
+from course
+where did=(select did 
+           from department
+           where dname='IT')
+
++---------------------+
+| cname               |
++---------------------+
+| SQL Programming     |
+| Angular Programming |
++---------------------+
+
+UC: display names of students that are enrolled in course 'SQL Programming'. 
+
+select sname
+from student
+where sid = (select sid 
+             from student_course
+             where cid=(select cid 
+                        from course
+                        where cname='SQL Programming'))
+
+ERROR 1242 (21000): Subquery returns more than 1 row
+
+select sname
+from student
+where sid IN (select sid 
+             from student_course
+             where cid IN (select cid 
+                          from course
+                          where cname='SQL Programming'))
+ 
+UC: display all students that are associated with department 'IT'. 
+
+select sname
+from student
+where sid IN (select sid 
+             from student_course
+             where cid IN (select cid 
+                          from course
+                          where did IN (select did
+                                        from department 
+                                        where dname='COMPS')));
+
+UC: display employee names who earn more than average salary of all employees. 
+
+select ename
+from employee
+where esalary > (select avg(esalary) from employee)
+
+
+Working with JOINS
+==================
+1. Inner Join / Natural Joins / Equi Join
+2. Left Join / Left Outer Join 
+3. Right Join / Right Outer Join 
+4. Full Join  
+5. Self Join 
+
+DDL
+---
+mysql> create table emp(eno int primary key auto_increment, ename varchar(50),esalary double,did int);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into emp(ename,esalary,did) values ('harry', 85000, 1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp(ename,esalary,did) values ('ronald', 85000, 2);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp(ename,esalary,did) values ('hermione', 95000, 1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp(ename,esalary) values ('draco', 88000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into department(dname) values ('ADMIN');
+Query OK, 1 row affected (0.01 sec)
+
+Inner Join
+----------
+TIP: innerjoin returns rows from tables that are connected to each other. i.e. all records that have corresponding mathing records in other table. 
+
+select *
+from emp e inner join department d ON e.did = d.did
+
+select *
+from emp e join department d ON e.did = d.did
+
++-----+----------+---------+------+-----+-------+
+| eno | ename    | esalary | did  | did | dname |
++-----+----------+---------+------+-----+-------+
+|   1 | harry    |   85000 |    1 |   1 | IT    |
+|   2 | ronald   |   85000 |    2 |   2 | COMPS |
+|   3 | hermione |   95000 |    1 |   1 | IT    |
++-----+----------+---------+------+-----+-------+
+
+Left Join
+---------
+TIP: left join returns all records of left table.
+
+select *
+from emp e left join department d ON e.did = d.did
+
+select *
+from emp e left outer join department d ON e.did = d.did
+
++-----+----------+---------+------+------+-------+
+| eno | ename    | esalary | did  | did  | dname |
++-----+----------+---------+------+------+-------+
+|   1 | harry    |   85000 |    1 |    1 | IT    |
+|   2 | ronald   |   85000 |    2 |    2 | COMPS |
+|   3 | hermione |   95000 |    1 |    1 | IT    |
+|   4 | draco    |   88000 | NULL | NULL | NULL  |
++-----+----------+---------+------+------+-------+
+
+Right Join
+----------
+Tip: Right join returns all records of right table
+
+select *
+from emp e right join department d ON e.did = d.did
+
+select *
+from emp e right outer join department d ON e.did = d.did
+
++------+----------+---------+------+-----+-------+
+| eno  | ename    | esalary | did  | did | dname |
++------+----------+---------+------+-----+-------+
+|    1 | harry    |   85000 |    1 |   1 | IT    |
+|    3 | hermione |   95000 |    1 |   1 | IT    |
+|    2 | ronald   |   85000 |    2 |   2 | COMPS |
+| NULL | NULL     |    NULL | NULL |   3 | ADMIN |
++------+----------+---------+------+-----+-------+
+
+
+Full Join*
+----------
+* there is no full join keyword in sql. however conceptually we can combile left and right joins to produce the result which could look like a full join. 
+
+select *
+from emp e full join department d ON e.did = d.did
+ERROR
+
+select *
+from emp e left join department d ON e.did = d.did
+UNION
+select *
+from emp e right join department d ON e.did = d.did
+
+
++------+----------+---------+------+------+-------+
+| eno  | ename    | esalary | did  | did  | dname |
++------+----------+---------+------+------+-------+
+|    1 | harry    |   85000 |    1 |    1 | IT    |
+|    2 | ronald   |   85000 |    2 |    2 | COMPS |
+|    3 | hermione |   95000 |    1 |    1 | IT    |
+|    4 | draco    |   88000 | NULL | NULL | NULL  |
+| NULL | NULL     |    NULL | NULL |    3 | ADMIN |
++------+----------+---------+------+------+-------+
+
+Self Join 
+---------
+
+mysql> drop table employee;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table employee(eno int primary key,ename varchar(50),esalary double,mgrno int);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into employee(eno,ename,esalary)values(1,'ALbus Dumbledore', 300000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee(eno,ename,esalary,mgrno)values(2,'severus snape', 180000,1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee(eno,ename,esalary,mgrno)values(3,'harry potter', 80000,2);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee(eno,ename,esalary,mgrno)values(4,'ronald weasley',70000,2);
+Query OK, 1 row affected (0.01 sec)
+
+UC: give the names of employees having manager 'severus snape'. 
+
+select ename
+from employee
+where mgrno=(select eno 
+             from employee
+             where ename='severus snape')
+
++----------------+
+| ename          |
++----------------+
+| harry potter   |
+| ronald weasley |
++----------------+
+  
+UC: Display the name of employee and its manager. 
+
++-----+------------------+---------+-------+
+| eno | ename            | esalary | mgrno |
++-----+------------------+---------+-------+
+|e1 1 | ALbus Dumbledore |  300000 |     1 |
+|   2 | severus snape    |  180000 |     1 |e2
+|   3 | harry potter     |   80000 |     2 |
+|   4 | ronald weasley   |   70000 |     2 |
++-----+------------------+---------+-------+
+
+select e2.ename as Employee,e1.ename as Manager
+from employee e1,employee e2
+where e1.eno = e2.mgrno  
+
+employee name |  manager name 
+e2.ename         e1.ename
+
++------------------+------------------+
+| Employee         | Manager          |
++------------------+------------------+
+| ALbus Dumbledore | ALbus Dumbledore |
+| severus snape    | ALbus Dumbledore |
+| harry potter     | severus snape    |
+| ronald weasley   | severus snape    |
++------------------+------------------+
+
+
+
+
+
+
+
+
+
+
+
+
+
