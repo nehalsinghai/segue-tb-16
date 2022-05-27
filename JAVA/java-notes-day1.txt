@@ -1,0 +1,163 @@
+Java Notes Day 1
+================
+Exercise 1: 
+
+Create classes A, B and C. create display method in each class displaying the name of that class. Call these 3 methods from APP/Main class. 
+Follow Java conventions
+
+ public class Main
+{
+	public static void main(String[] args) {
+		 //reach out to A
+		 A a = new A();   
+		 a.display();
+		 //reach out to B 
+		 B b = new B();
+		 b.display();
+		 //reach out to C
+		 C c = new C();
+		 c.display();
+	}
+} //class ends
+/*
+    My Custom classes
+*/
+class A{
+    void display(){
+        System.out.println("A");
+    }
+}
+
+class B{
+    void display(){
+        System.out.println("B");
+    }
+}
+
+class C{
+    void display(){
+        System.out.println("C");
+    }
+}
+
+
+Class: Variables and Methods
+============================
+
+Variable: 
+There are 2 types of variables in a class. 
+a. Instance variables
+b. local variables 
+
+1. Instance variables are declared inside the class body whereas
+local variables are declared inside the method body. 
+
+class A{
+    int x; //instance variable
+    
+    void m1(){
+        int y; //local variable
+    }
+    
+    int z; //instance variable
+}
+
+2. If a programmer does not initialize instance variables, JVM will initilize it. It will give a default value to it. 
+whereas if a local variable is not initilizaed by the programmer, JVM will also not initialize it. 
+That variables has no value. 
+If it is used in the program further, then it results in ERROR(compile fail-CF). 
+
+ public class Main
+{
+	public static void main(String[] args) {
+	 A a=new A(); 
+	 a.m1();
+	}
+}  
+  
+class A{
+    int x;  //0 given by JVM 
+    
+    void m1(){
+         int y; //no value
+         //System.out.println(y); ERROR - CF 
+         System.out.println(x); //0
+    }
+     
+}
+
+3. The scope of instance variable is in the entire class. 
+The scope of local variable is inside the method in which it is declared. 
+
+
+public class Main
+{
+	public static void main(String[] args) {
+	  A a=new A();
+	  a.m1();
+	  a.m2();
+	}
+}  
+  
+class A{
+    int x; //0
+    
+    void m1(){
+        int y=6;
+        System.out.println(y); //6 
+        System.out.println(x); //0
+    }
+    
+    void m2(){
+        System.out.println(x); //0
+      //  System.out.println(y); //ERROR - CF 
+    }
+     
+}
+
+4. 
+If there is a name clash between local and instance variables, we prefer local and access instance using 'this'. 
+
+public class Main
+{
+	public static void main(String[] args) {
+	    A a=new A();
+	    a.m1();
+	}
+}  
+  
+class A{
+     int x=5; 
+     
+     void m1(){
+         int x=6;
+         System.out.println(x);  //6
+         System.out.println(this.x); //5
+     }
+     
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
