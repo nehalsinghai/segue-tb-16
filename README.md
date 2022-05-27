@@ -14,13 +14,13 @@ Module 1:
 
 SQL Structure 
 
-select <attributes> / <gouping-functions> (compulsary)
-from <tbl-name(s)>  (compulsary)
-where <condition(s)> (optional)
-group by <attribute> (optional)
-having <condition(s)>: group functions (optional)
-order by <attribute> ASC/DESC/ (optional)
-limit l /s,l  (optional)
+-select <attributes> / <gouping-functions> (compulsary)
+-from <tbl-name(s)>  (compulsary)
+-where <condition(s)> (optional)
+-group by <attribute> (optional)
+-having <condition(s)>: group functions (optional)
+-order by <attribute> ASC/DESC/ (optional)
+-limit l /s,l  (optional)
 
 Working with Multiple Tables
 - Manual Mapping
