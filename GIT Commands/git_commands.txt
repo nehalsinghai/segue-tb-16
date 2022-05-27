@@ -1,0 +1,32 @@
+GIT Commands
+-------------
+
+git clone <remote-url>
+	: this clones the remote repository and creates a local repository. This is done only for the first time. 
+
+git pull origin: 
+	: After cloning the remote repo, we have local repo. from local repo we take a pull of remote which will download all the latest data that is on remote repo. 
+
+git add <file-name(s)>
+	: This command adds the recently created or changed files to local git. 
+
+git commit -m "<message>":
+	: commit creates a tree of files that are to be pushed in remote git
+
+git push origin:
+	: this command will push the data from local to remote. 
+
+git merge <main> <branch-name>:
+	: this merges branch with main branch. 
+
+git checkout -b "branch-name"
+	: this creates a new branch and transfers origin pointer/head to new branch. 
+
+git checkout branch-name
+	: without -b, git transfers origin pointer/head to new branch provided it already exists. 
+
+
+GIT is known for its Version Control Mechanism. 
+Multiple versions of the codes can be saved in multiple branches in the GIT. 
+
+
