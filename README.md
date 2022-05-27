@@ -3,14 +3,14 @@
 Module 1: 
 # SQL
  
-Installation
-  DDL: Data Definition Language
+# Installation
+  - DDL: Data Definition Language
       - create , alter 
-  DML: Data Manipulation Language
+  - DML: Data Manipulation Language
       - Insert, UPDATE, DELETE 
-  Select: 
+  - Select: 
       - operators: <, <= , >, >= , !=, <>, BETWEEN, NOT BETWEEN, IN, NOT IN, LIKE, IS, IS NOT 
-conjunctions: AND, OR    
+  - Conjunctions: AND, OR    
 
 SQL Structure 
 
