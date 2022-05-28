@@ -148,6 +148,47 @@ class Main{
 }
 
 
+Solution
+========
+public class Main
+{
+	public static void main(String[] args) {
+        	Student s1=new Student();	
+            Student s2=new Student();
+        
+        	s1.setMarks(150);
+        	s2.setMarks(160); 
+        
+        	System.out.println("percent for S1: " + s1.computeResult(s1.getMarks()));
+        	System.out.println("percent for S2: " + s2.computeResult(s2.getMarks()));
+	}
+}
+
+class Student{
+   String name;
+   double marks; 
+   
+    //getters
+    String getName(){
+        return name;
+    }
+    double getMarks() {
+        return marks;
+    }
+    //setters
+    void setName(String name){
+        this.name = name; 
+    }
+    void setMarks(double marks){
+        this.marks = marks; 
+    }
+   
+    double computeResult(double marks){
+     double total = 200; 
+     double percent = (marks * 100 ) / total; 
+    return percent;
+    }
+}
 
 
 
