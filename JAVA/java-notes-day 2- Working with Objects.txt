@@ -1,0 +1,181 @@
+Java Notes Day 2
+================
+
+Working with Methods
+--------------------
+Exercise: 
+
+public class Main
+{
+	public static void main(String[] args) {
+		 A a=new A(); 
+		 a.display();
+		 a.sum(5,7);
+		 int ans = a.computeSquare(10);
+		 System.out.println("Square is " + ans);
+		 a.save(10,20);
+		 int res = a.computeMul();
+		 System.out.println("Mul is " + res);
+	}
+}
+
+class A{
+    int x;
+    int y; 
+    
+    void display(){
+        System.out.println("A");
+    } 
+    
+    void sum(int x,int y){ //int x=5, int y=7 - arguments / parameters
+        int ans = x+y; //12
+        System.out.println("Sum is " + ans);
+    }
+    
+    int computeSquare(int x){ //int x=10
+        int ans = x*x; //100
+        return ans; 
+    }
+    
+    void save(int x,int y){ //int x=10, int y=20 
+        this.x=x;
+        this.y=y;
+    }
+    
+    int computeMul(){
+        int ans = x*y; 
+        return ans; 
+    }
+}
+
+Working with Objects / Heap and Stack
+=======================================
+
+All references go on the stack and all objects go on the heap. 
+
+Case Study 1: 
+ public class Main
+{
+	public static void main(String[] args) {
+		 Customer c1 = new Customer(); 
+		 Customer c2 = new Customer();
+		 
+		 c1.setName("harry potter");
+		 c1.setBalance(10000); 
+		 
+		 c2.setName("ronald weasley");
+		 c2.setBalance(8000);
+		 
+		 int updatedbalance = c1.deposit(c1.getBalance(), 4000); //(10000,4000) = 14000
+		 c1.setBalance(updatedbalance);
+		 
+		 updatedbalance = c2.deposit(c2.getBalance(),3000); //(8000, 3000) = 11000
+		 c2.setBalance(updatedbalance);
+		 
+		 System.out.println("Balance of c1 " + c1.getBalance()); //14000
+		 System.out.println("Balance of c2 " + c2.getBalance()); //11000
+	}
+}
+
+class Customer{
+   String name;
+   int balance; 
+   
+   //Setters 
+   void setName(String name){
+       this.name = name; 
+   }
+   
+   void setBalance(int balance){
+       this.balance = balance; 
+   }
+   
+   //Getters
+   int getBalance(){
+       return balance; 
+   }
+   
+   String getName(){
+       return name; 
+   }
+   
+   int deposit(int balance,int amount){ //10000,4000 
+       int updatedBalance = balance + amount; 
+       return updatedBalance;  //14000
+   }
+}
+
+Case Study 2: [To be done by students]
+create a class Student as per the below snippet. 
+
+class Student{
+  String name;
+  double marks; 
+}
+
+In the above class, create getters and setters for name and marks variables. 
+
+//getters
+getName(): must return name
+getMarks(): must return marks
+//setters
+setName(String name): must set this name to instance variable name
+setMarks(double marks): must set this marks to instance variable marks
+
+Create a method computeResult(double marks). 
+This method must return the percent of the student
+
+double computeResult(double marks){
+//logic
+return percent;
+}
+Note: total marks are 200. 
+
+Execute the following code and ensure that proper output is achieved. 
+
+class Main{
+ psvm(--){
+	Student s1=new Student();	
+    Student s2=new Student();
+
+	s1.setMarks(150);
+	s2.setMarks(160); 
+
+	System.out.println("percent for S1: " + 	s1.computeResult(s1.getMarks()));
+
+	System.out.println("percent for S2: " + 	s2.computeResult(s2.getMarks()));
+ }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

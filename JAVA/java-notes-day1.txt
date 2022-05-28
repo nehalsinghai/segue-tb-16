@@ -110,7 +110,7 @@ class A{
     
     void m2(){
         System.out.println(x); //0
-      //  System.out.println(y); //ERROR - CF 
+      //  System.out.println(y); //ERROR - CF Cannot find Symbol
     }
      
 }
@@ -136,7 +136,6 @@ class A{
      }
      
 }
-
 
 
 
