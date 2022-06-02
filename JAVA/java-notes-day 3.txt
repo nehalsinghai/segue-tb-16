@@ -1,0 +1,376 @@
+Java Day 3
+
+Inheritance & Polymorphism
+==========================
+Rule: 
+When a class extends other class, it participates in the codeline.This scenario is called as inheritance. 
+All the methods and variables of super-class come to sub-class. 
+
+public class App {
+	public static void main(String[] args) {
+		C c=new C();
+		c.m1();
+		c.m2();
+		c.m3();
+	}
+}
+class A{  //super
+	void m1() {
+		System.out.println("m1 in A");
+	}
+}
+
+class B extends A{ //sub
+	void m2() {
+		System.out.println("m2 in B");
+	}
+	//B has 2 methods m2() , m1()-A
+	
+}
+
+class C extends B{ //sub
+	void m3() {
+		System.out.println("m3 in C");
+	}
+	//C has 3 methods. m3(), m2()-B, m1()-A
+}
+
+Signature of a method
+---------------------
+1. Name of the method
+2. Number of arguments
+3. Data type of arguments
+4. Sequence of data types 
+
+ex 1. 
+void m1(int x)
+void m1() 
+
+--> Signature is Different 
+
+ex 2. 
+void m1(int x,int y)
+void m1(int y,int x)
+
+--> Signatures are same 
+
+ex 3.
+void display(double x, int y)
+void display(int x,double y)
+
+--> Sig is not same 
+
+Overloading and Overriding 
+--------------------------
+If the signature of the methods is same, It is considered to be Overriding. 
+Note: Return type and access specifier of the method should be same. 
+
+If the signatures of the methods are different, But the name is same then it is overloading. 
+
+Example: 
+
+public class App {
+	public static void main(String[] args) {
+		C c=new C();
+		c.m1();
+		c.m2();
+		c.m3();
+	}
+}
+class A{
+	void m1() {
+		System.out.println("m1 in A");
+	}
+}
+class B extends A{
+	void m2() {
+		System.out.println("m2 in B");
+	}
+	//B has 2 methods m2() , m1()-A
+}
+class C extends B{
+	void m3() {
+		System.out.println("m3 in C");
+	}
+	void m1() { //Overriding 
+		System.out.println("Updated m1 in A");
+	}
+	//C has 3 methods. m3() , m1(), m2()-B 
+}
+
+Ex 1.
+void m1(int x,double y)
+void m1(double y,int x)
+
+a. Overloading
+b. Overriding
+c. Nothing, different methods 
+
+ANS: a 
+
+Ex 2. 
+void display(int y)
+void display(float y)
+
+a. Overloading
+b. Overriding
+c. Nothing, different methods 
+
+ANS: a
+
+Ex 3. 
+void doStuff(int task)
+void doOtherStuff(int task)
+
+a. Overloading
+b. Overriding
+c. Nothing, different methods 
+
+Ans: c
+
+ 
+Section 2
+=========
+Keywords: final
+---------------
+final class
+-----------
+If a class is marked as final, it cannot be extended. 
+
+Ex: 
+final class A{
+	
+}
+
+class B extends A{ //ERROR: A is final, cannot be extended. 
+	
+}
+final method
+------------
+If a method is marked as final, it cannot be overrided. 
+
+class A{
+	final void m1() {
+		System.out.println("m1 in A");
+	}
+}
+
+class B extends A{  
+	void m1() { //ERROR: Cannot override the final method from A
+		System.out.println("updated m1 in A");
+	}
+}
+
+final variable
+--------------
+1. Final variable must be initialized by the programmer 
+class A{
+	final int x; //ERROR: must initilized final variable
+	final int y=5;
+}
+
+2. Final variable must not be assigned a value after initialization
+class A{
+	final int x; //ERROR: must initilized final variable
+	final int y=5;
+	
+	void m1() {
+		y=5; //ERROR: The final field A.y cannot be assigned
+	}
+}
+
+Keyword: static 
+
+1. Static Method
+static method cannot be overrided like final, however, it can be called by using the name of the class directly. 
+
+Ex. 
+public class App {
+	public static void main(String[] args) {
+		A.m1(); //static-way of calling a method 
+	}
+} 
+ 
+class A{
+	static void m1() {
+		System.out.println("m1 in A");
+	}
+}
+
+class B extends A{
+	void m1() { //ERROR: cannot override static method 
+		System.out.println("m1 in A");
+	}
+}
+
+2. static variables
+
+Note: 
+static variables belong to the class and have single copy. 
+They are independent of the objects. All objects will have same value of static variable. 
+
+
+STACK				HEAP
+-----				----
+A a1:100X			100X:AObj:int(x):5 - int(y): 10X
+A a2:200X			200X:Aobj:int(x):7 - int(y): 10X 
+
+A-static
+--------
+10X: int(y): 10
+20X: 
+
+In the above scenario, both objects (a1,a2) have their own value of x but share the common value of y. 
+
+class Customer{	//C1, C2, C3 
+	String name; 
+	double balance; 
+	static double rateOfInterest; 
+}
+
+class Student{ //s1,s2
+	int roll; 
+	String name; 
+	int marks; 
+	static int totalMarks; 
+}
+
+Example: 
+
+public class App {
+	public static void main(String[] args) {
+		 A a1=new A();
+		 A a2=new A(); 
+		/*
+			STACK				HEAP
+			-----				----
+			A a1:100X			100X:AObj:int(x):0 - int(y): 10X
+			A a2:200X			200X:Aobj:int(x):0 - int(y): 10X 
+			
+			A-static
+			--------
+			10X: int(y): 0		 
+		 */
+		 a1.setX(5);
+		 a2.setX(7);
+		 A.y=10;
+		/*
+			STACK				HEAP
+			-----				----
+			A a1:100X			100X:AObj:int(x):5 - int(y): 10X
+			A a2:200X			200X:Aobj:int(x):7 - int(y): 10X 
+			
+			A-static
+			--------
+			10X: int(y): 10
+		 */
+		 System.out.println(a1.getX()); //5
+		 System.out.println(a2.getX()); //7
+		 
+		 System.out.println(a1.getY());//10
+		 System.out.println(a2.getY());//10
+	}
+} 
+ 
+class A{
+	int x; 
+	static int y; 
+	
+	void setX(int x){
+		this.x = x;
+	}
+	
+	int getX(){
+		return x;
+	}
+	
+	int getY(){
+		return y;
+	}
+}
+
+Case Study: 
+Create a customer class and manage the balance of multiple customers. Compute Interest of each customer. 
+
+STACK				HEAP
+Customer c1:100X	100X:CustObj:double(balance):10000-double(rateOfInterest): 10X 
+Customer c2:200X	200X:CustObj:double(balance):8000- double(rateOfInterest): 10X 
+
+Customer-STATIC
+10X: double(rateOfInterest): 4.5
+
+Solution:
+public class App {
+	public static void main(String[] args) {
+		 Customer c1 = new Customer();
+		 Customer c2 = new Customer();
+		/*
+		STACK				HEAP
+		Customer c1:100X	100X:CustObj:double(balance):0 - double(rateOfInterest): 10X 
+		Customer c2:200X	200X:CustObj:double(balance):0 - double(rateOfInterest): 10X 
+		
+		Customer-STATIC
+		10X: double(rateOfInterest): 0
+				 
+		 */
+		 c1.setBalance(10000);
+		 c2.setBalance(8000);
+		 
+		 Customer.rateOfInterest=4.5;
+		/*
+		STACK				HEAP
+		Customer c1:100X	100X:CustObj:double(balance):10000-double(rateOfInterest): 10X 
+		Customer c2:200X	200X:CustObj:double(balance):8000- double(rateOfInterest): 10X 
+		
+		Customer-STATIC
+		10X: double(rateOfInterest): 4.5		 
+		 */
+		 double interest = c1.computeInterest(c1.getBalance()); 
+		 System.out.println("Interest for C1: " + interest); //450
+		 interest = c2.computeInterest(c2.getBalance()); 
+		 System.out.println("Interest for C2: " + interest); //360 
+		 
+		 Customer.rateOfInterest=5;
+		 System.out.println("Interest for C1: " + c1.computeInterest(c1.getBalance()) ); 
+		 System.out.println("Interest for C2: " + c2.computeInterest(c2.getBalance()) ); 
+} 
+}
+
+class Customer{
+	String name; 
+	double balance; 
+	static double rateOfInterest; 
+	
+	void setBalance(double balance){
+		this.balance = balance;
+	}
+	
+	double getBalance(){
+		return balance;
+	}
+	
+	double computeInterest(double balance){
+		double interest = (balance * rateOfInterest) / 100;  
+		return interest;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
