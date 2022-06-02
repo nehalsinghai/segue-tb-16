@@ -57,8 +57,8 @@ Case Study 1:
  public class Main
 {
 	public static void main(String[] args) {
-		 Customer c1 = new Customer(); 
-		 Customer c2 = new Customer();
+		 Customer c1 = new Customer(); //c1: 100X : balance : 14000
+		 Customer c2 = new Customer(); //c2: 200X : balance : 11000
 		 
 		 c1.setName("harry potter");
 		 c1.setBalance(10000); 
@@ -135,8 +135,8 @@ Execute the following code and ensure that proper output is achieved.
 
 class Main{
  psvm(--){
-	Student s1=new Student();	
-    Student s2=new Student();
+	Student s1=new Student();//S1: 100X: marks : 150	
+    Student s2=new Student();//S2: 200X: marks: 160
 
 	s1.setMarks(150);
 	s2.setMarks(160); 

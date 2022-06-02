@@ -34,7 +34,28 @@ Introduction to Dates in SQL
 	- git push & pull
 	- git branching & version control
 
+# Java
 
+# Section 1
+-----------
+- Working with Multiple Classes 
+	: App/Main with A, B, C
+- class entities
+	: Variables and methods 
+- Working with Objects
+	: heap and stack
+- Inheritance and Polymorphism
+	: codeline, signature of method
+	: Overloading & Overriding 
+
+# Section 2
+-----------
+- Keywords : final 
+- Keywords : static
+- Keywords : abstract 
+- Interfacing 
+- Constructors
+- Encapsulation 
 
 
 
