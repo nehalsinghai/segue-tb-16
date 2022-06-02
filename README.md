@@ -34,6 +34,12 @@ Introduction to Dates in SQL
 	- git push & pull
 	- git branching & version control
 
+# Assessment 
+	- Unix Commands :20-25 commands 
+	- Git : Commands from Notes + MCQ from the Internet  : 5m 
+	- Agile : 
+	- SQL Programming : Go through the Notes: MCQ from the Internet : 35m 	
+
 # Java
 
 # Section 1
