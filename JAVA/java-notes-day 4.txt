@@ -1,0 +1,225 @@
+Java Day 4
+----------
+Keyword: Abstract
+=================
+Abstract Method & Abstract Class
+--------------------------------
+-> Abstract method does not have a body and ends with a semicolon. 
+
+abstract void m1();
+
+-> Abstract method should always be written in an abstract class. 
+
+abstract class A{
+	abstract void m1();
+}
+
+-> We cannot create an object of an abstract class i.e. abstract class cannot be Instantiated. 
+
+
+public class App {
+	public static void main(String[] args) {
+		A a=new A(); //ERROR: Cannot instantiate abstract class A
+} 
+}
+
+abstract class A{
+	abstract void m1();
+}
+
+-> If a class extends an abstract class, it has to override all the abstract methods of that class OR mark it self as abstract. 
+
+Exercise:
+public class App {
+	public static void main(String[] args) {
+		 D d=new D();
+		 d.m1();
+		 d.m2();
+		 d.m3();
+} 
+}
+
+abstract class A{
+	abstract void m1();
+}
+
+abstract class B extends A{
+	void m1() {
+		System.out.println("m1 of A");
+	}
+	abstract void m2();
+}
+
+abstract class C extends B{
+	void m2() {
+		System.out.println("m2 of B");
+	}
+	abstract void m3();
+}
+
+class D extends C{ //D must implement the inherited abstract method C.m3()
+	void m3() {
+		System.out.println("m3 of C");
+	}
+}
+//P: m1() - A - m2() - B- m3() - C
+
+Interfacing
+===========
+
+Tip: final + static + abstract = interface 
+
+Rule 1: 
+An interface is , by default, an abstract entity and hence cannot be instantiated. i.e. create an object. 
+
+public class App {
+	public static void main(String[] args) {
+		 Inter i = new Inter(); //ERROR: Cannot instantiate the type Inter as it is abstract
+} 
+}
+ 
+ interface Inter{ //abstract interface Inter 
+	
+}
+
+Rule 2: 
+A variable in interface, by default, is public static and final. 
+
+public class App {
+	public static void main(String[] args) {
+		 System.out.println(Inter.y);//as y is static, can be accessed using class-name
+} 
+}
+ 
+ interface Inter{  
+	int x; //final static int x; : ERROR: x has to initialized
+	int y=5; 
+}
+
+Rule 3: 
+A method in interface, by default, is public & abstract.  
+
+ interface Inter{  
+	 void m1();//public abstract void m1() 
+}
+
+Rule 4: 
+If a class implements and interface, it has to override/implement all the methods of the interface OR mark itself as abstract. 
+
+Exercise: 
+public class App {
+	public static void main(String[] args) {
+		B b=new B();
+		b.sum(12,13);
+		b.square(10);
+ } 
+}
+ 
+interface Inter{  
+	  void sum(int x,int y);
+	  void square(int x);//abstract void square(int x)
+}
+ 
+abstract class A implements Inter{
+	public void sum(int x,int y) {
+		int z = x+y;
+		System.out.println("Sum is: " + z);
+	}
+	
+}
+
+class B extends A{
+	public void square(int x) {
+		int ans = x* x; 
+		System.out.println("Square is: " + ans);
+	}
+}
+interface Registration{
+	void readPI(String name,String address,String mobile,String email );
+	//save info in the DB 
+}
+
+Case Study: 
+Calculate area of Circle, circumfrence of the circle, area of rectangle. Use interface for defining requirements/tasks. 
+
+A : areaOfCircle()
+B : areaOfRectangle()
+C: circumOfCircle()
+
+Note: pi=3.14
+
+Constructors
+============
+Rule 1: 
+-------
+If a programmer does not create any constructor JVM, by default, create a no argument constructor also sometimes called as default constructor. 
+
+Rule 2:
+A constructor is called, whenever an object is created. 
+
+Rule 3: 
+Name of the constructor should be similar to that of the class and it must not return anything. 
+
+Tip: Constructors are used to initialize instance variables. 
+
+Exercise:
+public class App {
+	public static void main(String[] args) {
+		 Book b1=new Book("java",450); //100X:BookObj:title:java - price:450
+		 Book b2=new Book("sql"); //200X:BookObj:title:sql - price:0
+		 Book b3=new Book(300); //300X:BookObj:title:null - price:300
+		 Book b4=new Book();
+ } 
+}
+
+class Book{ //Constructor Overloading
+	String title;
+	double price;
+	
+	Book(String title, double price){
+		this.title = title;
+		this.price = price; 
+	}
+	
+	Book(String title){
+		this.title = title; 
+	}
+	
+	Book(double price){
+		this.price = price;
+	}
+	
+	Book(){
+		
+	}
+}
+
+Encapsulation
+=============
+1. We mark all instance variables as private. 
+2. We provide getters and setters for these variable. 
+
+class Book{
+	private double price; //price is encapsulated
+
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
+	}
+}
+ 
+We are protecting variables from direct access. 
+
+
+
+
+
+
+
+
+
+
+
+ 
