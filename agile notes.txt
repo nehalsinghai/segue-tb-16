@@ -1,0 +1,80 @@
+Agile Methodology
+-----------------
+
+Waterfall Model 
+---------------
+$5mn
+ 
+Analysts [3-4 months] 
+   | gathering requirement 
+Design [1-2 months]
+   | project architecture + DB design 
+Implementation [3-4 months]
+   | coding
+Testing [1 month]
+   | functional and performance testing 
+LIVE + Maintenance 
+
+This model does not work
+
+Agile Model
+------------
+5mn 
+
+MVP: 20 screens 
+
+Epic:  Cycle 1 : 10 screens 
+
+Analysis[2 weeks] --> Sprint[2 weeks] --> sprint review 
+
+Analysis[2 weeks] --> Sprint[2 weeks] --> sprint review 
+
+Analysis[2 weeks] --> Sprint[2 weeks] --> sprint review 
+
+Sprint=> JIRA 4512 => login screen => development => tester => submit work  [2 weeks]
+-- if you do not complete JIRA 4512 on time, it goes in backlog bucket and will spill over in next JIRA. 
+
+Sprint=> JIRA 4617 => Validate Device => development => tester => submit work [2 weeks]
+
+MVP: Minimum Viable Product 
+
+Epic:  Cycle 2 : 10 screens 
+
+------
+MVP Ready ==> Deploy LIVE ==> client review 
+
+Sprint(10 days)
+
+Sprint
+------
+Day 1: Spring Planning Call : 2-3 hours : Assign developers their JIRAs. 
+Day 2-9: Stand-Up Call: 30mins : for work update 
+Day 10: Sprint Review Call: All the work done during the sprint is reviewed. 
+
+Roles
+-----
+Development Lead
+Solution Architects
+Product Owner(PO): Analysts : gather info 
+Scrum Master(SM): Manage communication between all parties. work with PO and create JIRA. 
+Senior Developer 
+Developers
+Associate Developers 
+Testers
+UX- User Design 
+
+MCQ's + Examly Video
+
+
+
+
+
+
+
+
+
+
+
+
+
+
