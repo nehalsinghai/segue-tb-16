@@ -1,0 +1,354 @@
+Java Day 6
+----------
+Arrays
+======
+Arrays can be created in 3 possible ways. 
+
+Stack					Heap      0    1    2    3    4   5    6 
+int[] x:100X		100X:IntObj: 200X:300X:400X:500X:600:700X:800X
+					200X:3
+					300X:5
+int[] arr:900X		900X:IntObj: 10X:20X:30X:40X:50:60X:70X	
+
+
+
+Example:
+
+ public class App {
+	public static void main(String[] args) {
+		//Type 1
+		int[] x= {3,4,8,6,0,2,1}; 
+		System.out.println(x[0]);//3
+		System.out.println(x[4]);//0
+		
+		x[1]=5;
+		
+		//System.out.println(x[7]); //ArrayIndexOutOfBoundsException-AIOOBE
+		
+		for(int temp : x) {
+			System.out.print(temp + " ");
+		}
+		
+		System.out.println("\n********************");
+		//Type 2
+		int[] arr= new int[7]; //{0,0,0,0,0,0,0}
+		arr[0]=3;
+		arr[1]=5; 
+		
+		System.out.println(arr[3]);//0
+		
+		//Type 3 : anonymous type
+		int[] arry = new int[]{3,4,8,6,0,2,1};
+		
+		System.out.println(arry[4]);//0
+	} 
+}
+
+Array Operations:
+
+1. Iteration 
+2. Sorting : ASC & DESC
+3. Searching 
+4. Filtering 
+
+Example(Sorting):
+
+import java.util.Arrays; 
+import java.util.Collections;
+ public class App {
+	public static void main(String[] args) {
+		 Integer[] arr = new Integer[]{3,4,8,6,0,2,1};
+		 
+		 /*
+		  * Sorting
+		  */
+		 Arrays.sort(arr); //Sorts the array in Ascending Order. 
+		 for(int x : arr) {
+			 System.out.print(x + " ");
+		 }
+		 
+		 System.out.println("\n********************");
+		 
+		 Arrays.sort(arr, Collections.reverseOrder());//Sorts the array in Reverse Order.
+		 for(int x : arr) {
+			 System.out.print(x + " ");
+		 }
+		 
+	} 
+}
+
+
+Example(Searching):
+
+Linear Search is expensive and must not be Used. 
+
+Binary Search reduces Comparisions by 2 each type the array is split
+
+NOTE: Binary search only works on Sorted Arrays. 
+
+Example:
+import java.util.Arrays; 
+import java.util.Collections;
+ public class App {
+	public static void main(String[] args) {
+		 Integer[] arr = new Integer[]{3,4,8,6,0,2,1};
+		 
+		 /*
+		  * Binary Search
+		  */
+		 
+		 Arrays.sort(arr);//[0 1 2 3 4 6 8 ]
+		 
+		 int index = Arrays.binarySearch(arr, 0); 
+		 if(index < 0 )
+			 System.out.println("0 Not Found");
+		 else
+			 System.out.println("0 found at index: " + index);
+		 
+		 
+		 index = Arrays.binarySearch(arr, 6); 
+		 if(index < 0 )
+			 System.out.println("6 Not Found");
+		 else
+			 System.out.println("6 found at index: " + index);
+		 
+		 
+		 index = Arrays.binarySearch(arr, 5); 
+		 if(index < 0 )
+			 System.out.println("5 Not Found");
+		 else
+			 System.out.println("5 found at index: " + index);
+	} 
+}
+
+Example: Find the sum of 3 smallest elements of an array. 
+
+import java.util.Arrays; 
+import java.util.Collections;
+ public class App {
+	public static void main(String[] args) {
+		 Integer[] arr = new Integer[]{3,4,8,6,0,2,1};
+		 
+		 Arrays.sort(arr); //[0 1 2 3 4 6 8 ]
+		 int sum=0; 
+		 int count =0; 
+		 
+		 for(int x : arr) { //x=0 1 2
+			 count++; //1 2 3
+			 sum = sum + x; //sum=0  1  3
+			 
+			 if(count == 3)
+				 break; 
+		 }
+		 
+		 System.out.println(sum); 
+	} 
+}
+  
+Example: 
+In a given array, multiply N largest elements by K times and find the sum of all elements after doing multiplication. 
+
+ex. arr=[5,2,8,9,1,3,2,0]
+k=3;
+
+9*3 = 27; 
+8*3 = 24
+5*3 = 15 
+----------
+ + other elements = ANS 
+
+Solution:
+import java.util.Arrays; 
+import java.util.Collections;
+ public class App {
+	public static void main(String[] args) {
+		 Integer[] arr = new Integer[]{3,4,8,6,0,2,1};
+		 Test test = new Test(); 
+		 int N = 3;
+		 int K=2;
+		 int ans = test.m1(arr,N,K);
+		 System.out.println("Ans is " + ans); //42
+	} 
+}
+  
+class Test{
+	int m1(Integer[] arr, int N, int K){
+		int sum=0;
+		Arrays.sort(arr,Collections.reverseOrder()); //[16 12 8 3 2 1 0]
+		int count = 0; 
+		
+		for(int i=0;i<arr.length;i++) { //i=0 ,1  2
+			count++;     //count=1 2 3
+			arr[i] = arr[i] * K; //[]
+			
+			if(count == N)
+				break; 
+		}
+		
+		for(int temp:arr) {
+			sum = sum + temp; 
+		}
+		
+		return sum;
+	}
+}
+
+Example:
+From a given array, split the array in 2 parts based on even and odd index. 
+
+Sample: arr=[5,2,8,9,1,3,2,0]
+
+arr1(even index) =[5,8,1,2]
+arr2(odd index) = [2,9,3,0]
+
+Add these 2 index and form a third index. 
+
+arr3 = [7,17,4,2]
+
+Solution:
+
+public class App {
+	public static void main(String[] args) {
+		 Integer[] arr = new Integer[] {5,2,8,9,1,3,2,0};
+		 int len = arr.length /2; 
+		 Integer[] arr1 = new Integer[len]; //4
+		 Integer[] arr2 = new Integer[len]; //4 
+		 
+		 for(int i=0,j=0,k=0;i<arr.length;i++) { //i=0 1 ... 7
+			 if(i % 2 == 0) {
+				 //even
+				 arr1[j] = arr[i];
+				 j++;
+			 }
+			 else {
+				 //odd
+				 arr2[k] = arr[i];
+				 k++;
+			 }
+				 
+		 }
+		 
+		 for(int temp:arr1) {
+			 System.out.print(temp + " ");
+		 }
+		 System.out.println("\n");
+		 for(int temp:arr2) {
+			 System.out.print(temp + " ");
+		 }
+		 System.out.println("\n--------");
+		 Test test  = new Test(); 
+		 Integer[] arr3 = test.add(arr1,arr2);
+		 
+		 for(int temp:arr3) {
+			 System.out.print(temp + " ");
+		 }
+	} 
+}
+  
+class Test{
+	Integer[] add(Integer[] arr1 , Integer[] arr2){
+		Integer[] arr3 = new Integer[arr1.length];
+		
+		for(int i=0;i<arr1.length;i++) {
+			arr3[i] = arr1[i] + arr2[i]; 
+		}
+		return arr3; 
+	}
+}
+
+String
+=======
+String can be created in 2 possible ways in java. 
+
+1. String literal
+2. String Object
+
+Diff: Literals go in the pool whereas Objects go in the Heap. 
+
+Stack				Heap
+-----				-----
+String s1:10X		100X:StringObj:harry
+String s2:100X
+String s3:10X
+
+Pool
+----
+10X:harry
+
+
+Rule for comparision
+---------------------
+== operator checks locations 
+equals() checks values 
+
+Note:
+For String comparison, always use equals(). never go for == operator except when you are comparing with null. 
+
+Rule: 
+Pool does not take duplicates. 
+
+Example: 
+ 
+ public class App {
+	public static void main(String[] args) {
+		 String s1 = "harry"; //String Literal 
+		 String s2 = new String("harry");//String Objects 
+		 
+		 System.out.println(s1);//harry
+		 System.out.println(s2);//harry
+		 
+		 /*
+		  * String Comparison
+		  * 1. == operator
+		  * 2. equals method
+		  */
+		 
+		 System.out.println(s1.equals(s2)); //harry.equals("harry"): TRUE
+		 System.out.println(s1==s2); //10X == 100X : FALSE
+		 
+		 String s3 = "harry";
+		 System.out.println(s1.equals(s3));//harrys.equals("harry"):TRUE
+		 System.out.println(s1==s3);//10X == 10X: TRUE
+	} 
+}
+  
+String methods
+==============
+Example: 
+public class App {
+	public static void main(String[] args) {
+		 String str = "             harry potter               ";  //whitespaces 
+		  
+		 /*
+		  * trim method: removes spaces before and after the String. 
+		  */
+		 System.out.println(str.length());//40
+		 str = str.trim();
+		 System.out.println(str.length());//12
+		 
+		 /*
+		  * concat: add something at the end of the string
+		  */
+		 str = str.concat(" hogwards"); 
+		 System.out.println(str); //harry potter hogwards
+		 
+		 /*
+		  * Split the String 
+		  */
+		 
+		 String[] values = str.split(" ");//{"harry","potter","hogwards"}
+		 String fname=values[0];
+		 String lname=values[1];
+		 String school=values[2];
+		 
+		 System.out.println(fname + "  " + lname + " goes to " + school);
+	} 
+}
+
+
+
+
+
+
+
+
