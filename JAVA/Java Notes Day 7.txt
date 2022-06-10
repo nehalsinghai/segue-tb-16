@@ -1,0 +1,263 @@
+Java Day 7
+----------
+
+Exception Handling
+==================
+
+Example 1:
+ public class App {
+	public static void main(String[] args) {
+		Test test = new Test(); 
+		int ans = test.m1(10,0);
+		System.out.println(ans);
+		
+		System.out.println("Thank You!!");
+	} 
+}
+
+ class Test{
+	 int m1(int x,int y) {
+		 return x/y;
+	 }
+ }
+
+In the above program, An exception occurs at 
+int ans = test.m1(10,0);
+
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+	at com.main.Test.m1(App.java:15)
+	at com.main.App.main(App.java:6)
+
+Since this exception halts the program, 
+
+System.out.println("Thank You!!");
+
+is not displayed in the output. 
+
+Solution: 
+Handle the Exception. 
+
+public class App {
+	public static void main(String[] args) {
+		Test test = new Test(); 
+		try {
+			int ans = test.m1(10,0);
+			System.out.println(ans);
+		}
+		catch(ArithmeticException e) {
+			System.out.println("Divide by Zero is not allowed.. ");
+		}
+		
+		System.out.println("Thank You!!");
+	} 
+}
+
+ class Test{
+	 int m1(int x,int y) {
+		 return x/y;
+	 }
+ }
+OUTPUT: 
+Divide by Zero is not allowed.. 
+Thank You!!
+
+As the exception is handled, The control goes in the catch block, displays the message and continues execution. 
+
+Rule:
+An Exception can be thrown
+a. Programatically (JVM)
+b. Manually (Programmer)
+
+throw (object)
+
+Example:
+
+public class App {
+	public static void main(String[] args) {
+		Test test = new Test(); 
+		
+		try {
+			int length = test.m1(null); //"harry", null, "" 
+			System.out.println(length);
+		}
+		catch(NullPointerException e) {
+			System.out.println(e.getMessage());
+		}
+		catch(RuntimeException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		System.out.println("Thank You!!");
+	} 
+}
+
+ class Test{
+	  int m1(String name){
+		  
+		  if(name == null)
+			  throw new NullPointerException("Name value is excepted, cannot be NULL");
+		  
+		  if(name.length() == 0)
+			  throw new RuntimeException("Name given was Blank, Enter proper name..");
+		  
+		  return name.length();
+	  }
+ }
+
+Rule
+----
+If an Unchecked Exception, JVM does not check warning as well as handling. 
+
+For Unchecked Exception, Warning and handling is OPTIONAL. 
+
+Ex.
+public class App {
+	public static void main(String[] args) {
+		Test test = new Test(); 
+		test.m1();  //no exception handled.
+		 
+		System.out.println("Thank You!!");
+	} 
+}
+class Test{
+	   void m1(){ //No warning given
+		   throw new RuntimeException();
+	   }
+ }
+In the above program, No warning is given as well as No exception is being throws. 
+JVM still does not give any ERROR, why? because we are throwing UnCHECKED Exception-RuntimeException. 
+
+Ex2. 
+public class App {
+	public static void main(String[] args) {
+		Test test = new Test(); 
+		test.m1();  //no exception handled.
+		try { //Exception Handled.. 
+			test.m2();  
+		}
+		catch(Exception e) {
+			System.out.println(exception);
+		}
+		
+		System.out.println("Thank You!!");
+	} 
+}
+class Test{
+	   void m1(){ //No warning given
+		   throw new RuntimeException();
+	   }
+	   
+	   void m2() throws Exception{ //warning is compulsary
+		   throw new Exception(); 
+	   }
+ }
+
+In method m2(), a checked exception is thrown, hence it is compulsary to warn as well as handle the exception. 
+
+Case Study: 
+[Self Defined Exceptions]
+
+Take marks, totalMarks as input from the User, compute percentage, on the basis of percentage display grade
+
+percent > 75: A
+percent > 60: B
+percent > 45: C
+			: D
+
+If marks > totalMarks : IllegalMarksException
+If marks<0 : InValidMarksException
+If totalMarks<100: InvalidTotalMarksException
+
+ 
+Collections & Generics 
+======================
+ArrayList
+---------
+ArrayList class must be generically made to save values of particular data type. 
+
+
+ArrayList<String> list = new ArrayList<>(); 
+-- String values can be saved in the List. 
+
+ArrayList<Integer> list = new ArrayList<>(); 
+-- Integers can be saved in the List. 
+
+Example: 
+
+import java.util.ArrayList;
+import java.util.Collections; 
+public class App {
+	public static void main(String[] args) {
+		ArrayList<Integer> list = new ArrayList<>(); 
+		list.add(6);
+		list.add(8);
+		list.add(1);
+		list.add(0);
+		list.add(4);
+		list.add(6);
+		list.add(10);
+		
+		System.out.println(list);//[6, 8, 1, 0, 4, 6, 10]
+		System.out.println("\n***************");
+		for(int temp : list) {
+			System.out.print(temp + " ");
+		}
+		System.out.println("\n***************");
+		//Size of the List
+		System.out.println("Size of the List: " +list.size());
+		
+		list.remove(6);
+		System.out.println(list);//[6, 8, 1, 0, 4, 6]
+		
+		/*
+		 * Sorting 
+		 */
+		System.out.println("\n***************");
+		Collections.sort(list);
+		System.out.println(list); //[0, 1, 4, 6, 6, 8]
+		
+		/*
+		 * Searching
+		 */
+		int index = Collections.binarySearch(list, 4);
+		System.out.println("4 at inde: "+ index);
+		
+		
+	} 
+} 
+
+Working with Dates
+==================
+Example:
+
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+ public class App {
+	public static void main(String[] args) {
+		LocalDate ld = LocalDate.now();
+		System.out.println(ld);
+		
+		LocalTime lt = LocalTime.now();
+		System.out.println(lt);
+		
+		LocalDateTime ldt = LocalDateTime.now();
+		System.out.println(ldt);
+		
+		System.out.println(ld.getDayOfMonth());
+		System.out.println(ld.getDayOfWeek());
+		System.out.println(ld.getDayOfYear());
+	} 
+} 
+
+
+
+
+
+
+
+
+
+
+
