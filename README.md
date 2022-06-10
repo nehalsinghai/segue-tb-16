@@ -43,7 +43,7 @@ Introduction to Dates in SQL
 # Java
 
 # Section 1
------------
+ 
 - Working with Multiple Classes 
 	: App/Main with A, B, C
 - class entities
@@ -55,7 +55,7 @@ Introduction to Dates in SQL
 	: Overloading & Overriding 
 
 # Section 2
------------
+ 
 - Keywords : final 
 - Keywords : static
 - Keywords : abstract 
@@ -63,6 +63,19 @@ Introduction to Dates in SQL
 - Constructors
 - Encapsulation 
 
+# Section 3
+ 
+- Statements : if(if-else ladder, ternary),switch-case
+- Loops: for(foreach & traditional) & while
+- Primitive variables & casting
+- String
+- Arrays 
+
+# Section 4
+
+- Exception Handling
+- ArrayList
+- LocalDate
 
 
 
