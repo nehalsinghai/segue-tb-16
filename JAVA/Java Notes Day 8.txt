@@ -1,0 +1,207 @@
+Java Day 8
+---------
+
+UNIT TESTING: JUNIT
+===================
+For Unit Testing, we have many tools. 
+The most popular framework for Unit testing is JUnit. 
+
+To set up Junit in java project we do following steps: 
+
+1. Download Junit jar file and save it in lib folder. 
+2. Download Hamcrest Junit runner and save it in lib folder. 
+
+3. Add the libraries to classpath of JVM making them as referenced libraries. 
+
+4. Create a Test Class and use @Test annotation to create unit test cases. 
+
+Example: 
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+public class TestClass {
+
+	@BeforeClass
+	public static void beforeClass() {
+		System.out.println("before class");
+	}
+	
+	@Before
+	public void beforeTest() {
+		System.out.println("before test..");
+	}
+	
+	@Test
+	public void m1() {
+		System.out.println("m1 test");
+	}
+	
+	@Test
+	public void m2() {
+		System.out.println("m2 test");
+	}
+	
+	@After
+	public void afterTest() {
+		System.out.println("after test..");
+	}
+	
+	@AfterClass
+	public static void afterClass() {
+		System.out.println("after class");
+	}
+}
+
+/*
+before class
+before test..
+m1 test
+after test..
+before test..
+m2 test
+after test..
+after class
+*/
+
+
+Example:
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import com.main.A;
+
+import jdk.jfr.Experimental; 
+
+public class ATest {
+	A a; //scope of a is in all methods
+	
+	@Before //this executes before every test case
+	public void initTest() {
+		a=new A();  //create
+	}
+	
+	@Test
+	public void sumTest(){
+		
+		Assert.assertEquals(30,a.sum(10,20));
+		Assert.assertEquals(1,a.sum(-4,5));
+		Assert.assertEquals(-11,a.sum(-5,-6));
+		Assert.assertEquals(24,a.sum(10,14));
+	}
+	
+	@Test
+	public void computePercentTest() {
+		 
+		Assert.assertEquals(80 ,Math.round(a.computePercent(320, 400)));
+		Assert.assertEquals(80 ,Math.round(a.computePercent(321, 400)));
+		Assert.assertEquals(81 ,Math.round(a.computePercent(322, 400)));
+		Assert.assertEquals(55 ,Math.round(a.computePercent(220, 400)));
+	}
+	
+	@Test
+	public void computeGradeTest() {
+		 
+		Assert.assertEquals("A",a.computeGrade(80));
+		Assert.assertEquals("B",a.computeGrade(70));
+		Assert.assertEquals("C",a.computeGrade(50));
+		Assert.assertEquals("D",a.computeGrade(40));
+		
+	}
+	
+	@Test
+	public void sortArrayAsc() {
+		Integer[] arr = new Integer[] {3,4,1,2};
+		Integer[] sortedArr = new Integer[] {1,2,3,4};
+		Assert.assertArrayEquals(sortedArr, a.sortArrayAsc(arr));
+	}
+	
+	@Test
+	public void sortArrayDesc() {
+		Integer[] arr = new Integer[] {3,4,1,2};
+		Integer[] sortedArr = new Integer[] {4,3,2,1};
+		Assert.assertArrayEquals(sortedArr, a.sortArrayDesc(arr));
+	}
+	
+	@Test 
+	public void computeLengthTest() {
+		Assert.assertEquals(5, a.computeLength("harry"));
+		try {
+			Assert.assertEquals(0, a.computeLength(null));
+		}
+		catch(NullPointerException e) {
+			Assert.assertEquals("null", e.getMessage());
+		}
+		
+		try {
+			Assert.assertEquals(0, a.computeLength(""));
+		}
+		catch(RuntimeException e) {
+			Assert.assertEquals("blank", e.getMessage());
+		}
+		
+		 
+	}
+	
+	@After //this executes after every test case
+	public void afterTest() {
+		a=null; //destroy
+	}
+	
+	//@Before - @Test - @After 
+	//@Before - @Test - @After 
+}
+
+import java.util.Arrays;
+import java.util.Collections;
+ public class A {
+	 
+	public int sum(int x,int y){
+		 return x+y;
+	 }
+	
+	public double computePercent(double marks,double total) {
+		double percent = (marks * 100) / total;
+		return percent; 
+	}
+	
+	public String computeGrade(double percent) {
+		if(percent > 75)
+			return "A";
+		
+		if(percent > 60)
+			return "B";
+		
+		if(percent > 45)
+			return "C";
+		
+		return "D";
+	}
+	
+	public Integer[] sortArrayAsc(Integer[] arr) {
+		Arrays.sort(arr);
+		return arr; 
+	}
+	
+	public Integer[] sortArrayDesc(Integer[] arr) {
+		Arrays.sort(arr,Collections.reverseOrder());
+		return arr; 
+	}
+	
+	
+	public int computeLength(String name) {
+		if(name== null)
+			throw new NullPointerException("null");
+		if(name.equals(""))
+			throw new RuntimeException("blank"); 
+		
+		return name.length();
+	}
+}
+ 
+
