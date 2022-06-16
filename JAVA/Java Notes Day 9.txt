@@ -1,0 +1,245 @@
+Java Day 9
+----------
+
+JDBC: Java Database Connectivity 
+================================
+
+Setting up JDBC in Java Project
+-------------------------------
+1. Download mysql-java-connector jar file
+
+[https://mvnrepository.com/artifact/mysql/mysql-connector-java/8.0.27]
+
+2. Add the jar in lib folder and add to build path 
+
+JDBC Implementation
+-------------------
+Step 1: Load the Driver 
+
+Class.forName("com.mysql.cj.jdbc.Driver");
+
+Step 2: Establish the Connection 
+url: jdbc:mysql://localhost:3306/segue_16
+username: root 
+password: 
+
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/segue_16", "root", ""); 
+
+
+Step 3: Prepare the Statement 
+
+PreparedStatement pstmt = con.prepareStatement(sql);
+
+Step 4: Execute the Statement 
+
+executeQuery() : select 
+executeUpdate(): insert, update,delete 
+
+Implementation
+--------------
+App.java
+--------
+  import java.util.*; 
+ public class App {
+	public static void main(String[] args) {
+		DB db=new DB();
+		Scanner sc = new Scanner(System.in); 
+		while(true) {
+			System.out.println("****MENU*****");
+			System.out.println("Press 1. to insert");
+			System.out.println("Press 2. to delete");
+			System.out.println("Press 3. to update");
+			System.out.println("Press 4. to display all students");
+			System.out.println("Press 0. to exit");
+			int input = sc.nextInt(); 
+			
+			if(input == 0) {
+				System.out.println("Exiting.. thanx");
+				break; 
+			}
+			
+			switch(input) {
+			case 1: 
+				System.out.println("Enter student name");
+				String name = sc.next();
+				System.out.println("Enter email");
+				String email = sc.next();
+				db.insertStudent(name,email); 
+				break; 
+			case 2:
+				System.out.println("Enter Student ID to delete");
+				int sid = sc.nextInt();
+				db.deleteStudent(sid);
+				break; 
+			case 3: 
+			case 4: 
+				ArrayList<Student> list = db.fetchStudents();
+				for(Student s :list) {
+					System.out.println(s.getSid() +  "--" + s.getSname() + "--" + s.getSemail());
+				}
+				break;
+			default: 
+				System.out.println("Invalid Input, Try again..");
+			}
+		}
+	} 
+} 
+
+Student.java
+------------
+
+public class Student {
+	private int sid;
+	private String sname;
+	private String semail;
+
+	public int getSid() {
+		return sid;
+	}
+
+	public void setSid(int sid) {
+		this.sid = sid;
+	}
+
+	public String getSname() {
+		return sname;
+	}
+
+	public void setSname(String sname) {
+		this.sname = sname;
+	}
+
+	public String getSemail() {
+		return semail;
+	}
+
+	public void setSemail(String semail) {
+		this.semail = semail;
+	}
+
+}
+
+DB.java
+-------
+import java.sql.*;
+import java.util.ArrayList; 
+public class DB {
+
+	Connection con; 
+	
+	public void dbConnect() {
+		/*
+		 * Step 1: Load the Driver
+		 */
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			//System.out.println("Driver loaded..");
+		}
+		catch(ClassNotFoundException e) {
+			System.out.println("driver not found..");
+			e.printStackTrace();
+		}
+		/*
+		 * Step 2: Establish the Connection
+		 */
+		try {
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/segue_16", "root", ""); 
+			//System.out.println("Connection Established..");
+		}
+		catch(SQLException e) {
+			System.out.println("Connection failure..");
+			e.printStackTrace();
+		}
+		
+	} //end 
+	
+	public void dbClose() {
+		try {
+			con.close();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+	} //end close
+	
+	public void insertStudent(String name, String email){
+		dbConnect();
+		String sql="insert into student(sname,semail) values (?,?)";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setString(2, email);
+			pstmt.executeUpdate();	
+			System.out.println("Record Inserted");
+		}
+		catch(SQLException e) {
+			System.out.println("Query Issue..");
+		}
+		dbClose();
+	} //end insert
+	
+	public ArrayList<Student> fetchStudents(){
+		ArrayList<Student> list = new ArrayList<>();
+		dbConnect();
+		String sql="select * from student";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rst = pstmt.executeQuery();	
+			while(rst.next()) {
+				//Fetch each column from rst and save it in variable 
+				int sid = rst.getInt("sid");
+				String sname = rst.getString("sname");
+				String semail = rst.getString("semail");
+				//Attach the variables to Student Object 
+				Student s = new Student(); 
+				s.setSid(sid);
+				s.setSname(sname);
+				s.setSemail(semail);
+				//Add Student Object to list 
+				list.add(s);
+			}
+		}
+		catch(SQLException e) {
+			System.out.println("Query Issue..");
+		}
+		dbClose();
+		return list; 
+	} //end fetch
+ 
+	public void deleteStudent(int sid){
+		dbConnect();
+		String sql="delete from student where sid = ?";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, sid);
+			pstmt.executeUpdate();
+			System.out.println("Employee Record Deleted...");
+		}
+		catch(SQLException e) {
+			System.out.println("Query Issue..");
+		}
+		
+		dbClose();
+	}
+}
+
+JDBC Driver Types
+=================
+Type 1 : jdbc -> Odbc bridge -> DB 
+Type 2 : jdbc -> Native Libraries -> DB : DB Dependent 
+Type 3 : jdbc -> Network Protocol -> DB 
+Type 4 : jdbc -> DB : Pure Java Driver 
+
+for details, Refer,
+https://en.wikipedia.org/wiki/JDBC_driver
+
+
+
+
+
+
+
+
+
+
