@@ -1,0 +1,197 @@
+Java Extra Topics - Assessment
+------------------------------
+
+super keyword
+=============
+public class App {
+	public static void main(String[] args) {
+		Two t = new Two();
+		t.m1();
+	} 
+} 
+
+class One{ //super 
+	void m1() {
+		System.out.println("m1 in One");
+	}
+}
+
+class Two extends One{ //sub
+	void m1() {
+		super.m1(); //super calls the method of the super class. 
+		System.out.println("m1 in Two");
+	}
+}
+/*
+OUTPUT
+-----
+m1 in One
+m1 in Two
+*/
+
+finally block
+=============
+public class App {
+	public static void main(String[] args) {
+		 One one=new One();
+		 try {
+			 //one.m1();
+			 one.m2();
+		 }
+		 catch(RuntimeException e) {
+			 System.out.println("catch");
+		 }
+		 finally { 
+			 //irrespective of weather the exception is //thrown, weather the control goes in catch block or not
+			 //finally always gets called.
+			 System.out.println("finally");
+		 }
+	} 
+} 
+class One{
+	void m1() {
+		throw new RuntimeException();
+	}
+	
+	void m2() {
+		
+	}
+}
+
+
+Working with Files
+==================
+Example 1: Creating a file
+---------------------------
+import java.io.*; 
+public class App {
+	public static void main(String[] args) {
+		 File file = new File("myfile.txt"); //File Handler
+		 /*
+		  * Exam watch: File Handler never creates a file. 
+		  */
+		 try {
+			 if(file.createNewFile()) {
+				 System.out.println("File Created");
+			 }
+			 else {
+				 System.out.println("File Creation Problem..");
+			 }
+		 }
+		 catch(IOException e) {
+			 System.out.println("Exeception Thrown..");
+		 }
+	} 
+}  
+
+Example 2: Create a file and write some content in the file.
+------------------------------------------------------------
+import java.io.*; 
+public class App {
+	public static void main(String[] args) {
+		 /*
+		  * 3 classes that can be used to write the content to a file. 
+		  * 1. PrintWriter
+		  * 2. FileWriter
+		  * 3. InputStreamWriter
+		  */
+		try {
+			FileWriter fw = new FileWriter("file1.txt");
+			System.out.println("File created..");
+			/*
+			 * Exam watch: If the file does not exists, FileWriter creates it. 
+			 */		
+			//Write the Data
+			fw.write("This is my file \nThis is my file 2");
+			fw.close();
+			
+			PrintWriter pw = new PrintWriter("file2.txt");
+			pw.println("this is my pw file");
+			pw.println("this is my pw file 2");
+			
+			pw.close();
+			
+		}
+		catch(IOException e) {
+			System.out.println("File not created..");
+		}
+	} 
+}  
+
+Example 3: Read the content of the file
+---------------------------------------
+import java.io.*; 
+import java.util.Scanner; 
+public class App {
+	public static void main(String[] args) {
+		  /*
+		   * FileReader 
+		   * BufferedReader
+		   * Scanner   
+		   */
+		File file = new File("file1.txt"); //file handler
+		try {
+			Scanner sc = new Scanner(file);
+			while(sc.hasNextLine()) {
+				System.out.println(sc.nextLine());
+			}
+			sc.close();
+		}
+		catch(FileNotFoundException e) {
+			System.out.println("File not found");
+		}
+		System.out.println("************");
+		
+		char[] mycontent = new char[1000];
+		try {
+			FileReader fr = new FileReader(file);
+			fr.read(mycontent);
+			
+			for(char c : mycontent) {
+				System.out.print(c);
+			}
+			fr.close();
+		}
+		catch(FileNotFoundException e) {
+			System.out.println("File not found");
+		}
+		catch(IOException e) {
+			System.out.println("IO");
+		}
+		
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(new File("file2.txt")));
+			BufferedReader br1 = new BufferedReader(new InputStreamReader(System.in,"file2.txt"));
+			
+			 
+		}
+		catch(FileNotFoundException | UnsupportedEncodingException e) {
+			
+		}
+		
+		
+	} 
+}  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

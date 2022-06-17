@@ -1,0 +1,126 @@
+Angular Day 1
+=============
+
+HTML+CSS+JavaScript
+-------------------
+Example 1: Basic Example
+
+<html>
+    <head>
+        <style>
+            .h1{
+                color: blue;
+            }
+
+            #h3{
+                color: brown;
+            }
+
+            p{
+                color: darkgreen;
+            }
+        </style>
+
+        <script>
+            function clickMe(){
+                alert('Welcome User!!');
+            }
+        </script>
+    </head>
+
+    <body>
+        <h1 class="h1">This is a header</h1>
+
+        <h3 id="h3">This is a header</h3>
+
+        <p>This is a para text</p>
+
+        <hr>
+
+        <button onclick="clickMe()">Click Me!</button>
+    </body>
+</html>
+
+Example 2: Display HTML form, take input from the User, Read it using Javascript and display the content back on WebPage.
+
+<html>
+    <head>
+       <script>
+            function register(){
+                let fname = document.getElementById('fname').value;
+                let lname = document.getElementById('lname').value;
+                let city = document.getElementById('city').value;
+                let message="<hr>You Entered<br />First Name:"+fname+"<br />Last Name:"+lname+"<br />City:"+city; 
+
+                document.getElementById('info').innerHTML=message;
+                
+            }
+       </script>
+    </head>
+
+    <body>
+       <h1>Registration</h1>
+
+       <label>Enter you Fname</label>
+       <input type="text" name="fname" id="fname">
+       <br /><br />
+       <label>Enter you Lname</label>
+       <input type="text" name="lname" id="lname">
+       <br /><br />
+       <label>Select your City:</label>
+       <select name="city" id="city">
+            <option>--please select--</option>
+            <option value="mumbai">mumbai</option>
+            <option value="indore">indore</option>
+            <option value="raipur">raipur</option>
+       </select>
+       <br /><br />
+       <button onclick="register()">Register</button>
+
+       <div id="info">
+            
+       </div>
+    </body>
+</html>
+
+
+Angular 
+========
+
+Setting up the System
+---------------------
+1. Download Node
+[https://nodejs.org/en/download/]
+
+2. Install Angular cli 
+npm install -g @angular/cli
+
+3. create angular project
+ng new my-first-project
+
+4. Start the project
+cd my-first-project
+ng serve / npm start
+
+Project Inspection
+------------------
+- Angular creates a module 'app'. 
+[app.module.ts]
+
+- Angular also creates 1 component 'app'. 
+component in angular is made of 4 files:
+1. css : app.component.css
+2. html: app.component.html
+3. spec: app.component.spec.ts : for testing
+4. ts: app.component.ts : typescript
+
+Note: ts is TypeScript. It is a super set of Javascript
+
+
+
+
+
+
+
+
+
