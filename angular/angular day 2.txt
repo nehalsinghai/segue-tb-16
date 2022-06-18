@@ -1,0 +1,287 @@
+Angular Day 2
+=============
+Example 1: Render ts variables on HTML page and enulate calc operations. 
+
+app.component.ts
+================
+export class AppComponent {
+   x:number = 10;
+   y:number = 2;
+   result:number =0;
+   
+   add(){
+    this.result = this.x+this.y;
+   }
+
+   sub(){
+    this.result = this.x-this.y;
+   }
+
+   mul(){
+    this.result = this.x*this.y;
+   }
+   divide(){
+    this.result = this.x/this.y;
+   }
+}
+
+app.component.html
+==================
+<html>
+   <h1>Welcome to Angular!! </h1>
+<div>
+  <p>x={{x}}</p>
+  <p>y={{y}}</p>
+  <h3>Result is : {{result}}</h3>
+  <hr>
+  <button (click)="add()">Addition</button>
+  <button (click)="sub()">Subtraction</button>
+  <button (click)="mul()">Multiply</button>
+  <button (click)="divide()">Divide</button>
+</div>
+
+</html>
+
+Example 2: Create a toggle button to show/hide a div element using ngIf directive. 
+-------------------------------------------------------
+
+Angular Directives:
+==================
+ngIf
+ngFor
+
+Solution: 
+app.component.html
+==================
+<html>
+<button (click)="toggleContact()">Contact Info</button>
+<div *ngIf="doShow">
+  <h1>Contact Info</h1>
+  101 Kingston Avenue Clair Road Mumbai <br />
+  phone: 7588900696 <br />
+  email: info@gmail.com
+</div>
+</html>
+
+app.component.ts
+================
+doShow:boolean=false;
+
+  toggleContact(){
+    this.doShow = !this.doShow;
+  }
+
+Example: Display and Iterate over an array using ngFor directive. 
+Also filter the array based on even/odd numbers. 
+
+app.component.html
+==================
+<html>
+ <div>
+  <h2>Array Operation with NgFor</h2>
+  <ul>
+    <li *ngFor="let temp of arr"> {{temp}} </li>
+  </ul>
+  <hr>
+  <button (click)="filterEven()">Filter:Even</button>
+  <button (click)="filterOdd()">Filter:Odd</button>
+  <button (click)="reset()">Reset</button>
+ </div>
+</html>
+
+app.component.ts
+================
+
+export class AppComponent {
+  arr:number[];
+
+  constructor(){
+    this.arr = [4,3,6,1,2,8,7];
+  }
+
+  filterEven(){
+    this.arr = this.arr.filter(e=>e%2==0)
+  }
+
+  filterOdd(){
+    this.arr = this.arr.filter(n=>n%2!=0);
+  }
+
+  reset(){
+    this.arr=[4,3,6,1,2,8,7];
+  }
+}
+
+Working with Class & Object 
+===========================
+Employee.model.ts
+-----------------
+export class Employee{
+  eno:number;
+  ename:string;
+  esalary:number;
+  city:string;
+}
+
+app.component.ts
+----------------
+export class AppComponent {
+
+  employee1: Employee;
+  employee2: Employee;
+  employee3: Employee;
+
+  employees:Employee[] ;
+
+  constructor(){
+    this.employee1 = {
+      eno: 1,
+      ename: 'harry potter',
+      esalary: 85000,
+      city: 'london'
+    };
+
+    this.employee2 = {
+      eno: 2,
+      ename: 'ronald weasley',
+      esalary: 75000,
+      city: 'manchester'
+    };
+
+    this.employee3 = {
+      eno: 3,
+      ename: 'hermione granger',
+      esalary: 95000,
+      city: 'london'
+    };
+    this.employees =[];
+    this.employees.push(this.employee1);
+    this.employees.push(this.employee2);
+    this.employees.push(this.employee3);
+  }
+}
+
+app.component.html
+------------------
+<html>
+  <h2>All Employee Details</h2>
+<div *ngFor="let emp of employees">
+  Employee NO: <strong> {{emp.eno}}</strong>
+  Employee NAME: <strong> {{emp.ename}}</strong>
+  Employee SALARY:<strong> {{emp.esalary}}</strong>
+  Employee CITY:<strong> {{emp.city}}</strong>
+  <hr>
+</div>
+</html>
+
+OUTPUT:
+-------
+All Employee Details
+Employee NO: 1 Employee NAME: harry potter Employee SALARY: 85000 Employee CITY: london
+Employee NO: 2 Employee NAME: ronald weasley Employee SALARY: 75000 Employee CITY: manchester
+Employee NO: 3 Employee NAME: hermione granger Employee SALARY: 95000 Employee CITY: london
+
+Angular Lifecycle Hooks
+=======================
+When the component is loaded, First the module file is loaded.
+
+Model Loaded  =>  Component is constructed (constructor is called) => Lifecycle methods/hooks if any are called. 
+
+1. OnInit Interface: ngOnInit() method 
+
+Example: Create a Dropdown filter for array filtration. 
+
+Step 1:
+--------
+Add FormsModule in imports[] of app.module.ts
+
+import { FormsModule } from '@angular/forms';
+
+imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule
+  ],
+
+Step 2: 
+--------
+Create a drop down with (change) event handler and [(ngModel)] directive. 
+
+<div>
+  Select City:
+  <select [(ngModel)]="city" (change)="citySelected()">
+    <option value="show-all">show all</option>
+    <option value="london">london</option>
+    <option value="manchester">manchester</option>
+  </select>
+</div>
+
+Step 3: 
+-------
+Create city and citySelected() function in app.component.ts
+
+export class AppComponent implements OnInit{
+
+  employee1: Employee;
+  employee2: Employee;
+  employee3: Employee;
+  employees:Employee[] ;
+  city:string;
+
+  constructor(){ }
+
+  ngOnInit(){
+    this.employee1 = {
+      eno: 1,
+      ename: 'harry potter',
+      esalary: 85000,
+      city: 'london'
+    };
+
+    this.employee2 = {
+      eno: 2,
+      ename: 'ronald weasley',
+      esalary: 75000,
+      city: 'manchester'
+    };
+
+    this.employee3 = {
+      eno: 3,
+      ename: 'hermione granger',
+      esalary: 95000,
+      city: 'london'
+    };
+    this.addObjectsToArray();
+    this.city="show-all";
+  }
+  addObjectsToArray(){
+    this.employees =[];
+    this.employees.push(this.employee1);
+    this.employees.push(this.employee2);
+    this.employees.push(this.employee3);
+  }
+
+  citySelected(){
+    this.addObjectsToArray();
+    if(this.city != 'show-all')
+          this.employees = this.employees
+                        .filter(e=>e.city == this.city);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
